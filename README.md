@@ -1,31 +1,37 @@
-# Orust Handelsträdgård Website
+# Design Rationale: Orust Handelsträdgård
 
-A modern, responsive, and beautifully animated single-page website for "Orust Handelsträdgård".
+This document outlines the architectural and design decisions made to address every specific constraint and web design feature from the checklist.
 
-## Setup Instructions
-1. Save the `index.html` code block into a file named `index.html`.
-2. Ensure the provided logo image is named `orust-logo.png.jpg` and sits in the same directory as the HTML file.
-3. Open `index.html` in any modern web browser to view the final result.
+### 1. Overall Arrangement of Elements (Layout)
+The layout relies on a clear, single-page, vertically scrolling hierarchy. It begins with a sticky header containing the logo and language toggle. The page flows linearly: Hero (brand introduction) ➔ Gallery ➔ Carousel (products/seasons) ➔ Empty State (events) ➔ Video (ambience) ➔ FAQ ➔ Contact ➔ Footer. I utilized a mobile-first responsive approach but ensured a robust desktop grid (`max-width: 1440px`), relying on CSS Grid (`grid-template-columns: repeat(auto-fit...)`) for the gallery and FAQ to guarantee fluid adaptation across breakpoints.
 
----
+### 2. Background and Foreground Relationships (Visual Composition)
+To ensure accessibility and contrast, the color palette draws heavily from the uploaded logo image. I utilized a deep forest green (`#193f2c`) paired with gold (`#c4a775`) on a warm off-white background (`#fdfbf7`). Shadows (`box-shadow`) and blending modes (`mix-blend-mode: multiply`) are used in the hero section to isolate the bright typography from the dark, rich photographic background layers.
 
-## Design Rationale
+### 3. Scroll Behavior and Interactions (Depth Parallax)
+**Parallax depth effects were marked as a MUST.** Instead of standard, often buggy, CSS 3D transforms (`perspective`), I implemented a high-performance JavaScript-driven depth parallax. The hero section contains three layers:
+* A background image (slower, `data-speed="0.5"`)
+* A midground botanical overlay (`data-speed="0.2"`)
+* Foreground typography (moves upward slightly faster, `data-speed="-0.15"`)
+This creates a distinct 3D depth field that dynamically reacts as the user scrolls, creating an immersive, premium feel.
 
-**1. Overall arrangement of elements — layout** The site is built utilizing a mobile-first CSS logic, relying on modern `Flexbox` and `CSS Grid` properties for structured, fluid layouts. Elements flow naturally down the page: fixed header -> large welcoming hero -> video block -> horizontal scrolling carousel -> grid gallery -> empty states -> FAQ -> contact & footer. This logic creates a journey for the user rather than an overwhelming dump of information.
+### 4. Transitions and Animations
+All interactive elements (buttons, image hovers, language dropdown) use a global CSS variable (`--transition-smooth: all 0.4s cubic-bezier(...)`). The gallery features a subtle `.gallery-item:hover img { transform: scale(1.08); }` to reward user exploration without overwhelming the senses. The "Back to Top" button fades and slides in smoothly once the user scrolls past 400px.
 
-**2. Background and foreground relationships — visual composition** The color palette was directly inspired by the provided logo. The background is a soft beige (`#F4EFE6`), contrasted heavily by a deep green text/heading color (`#1b432d`). This creates an earthy, organic visual composition. The header utilizes `backdrop-filter: blur` to ensure the background naturally melts beneath it while scrolling, keeping the content readable without breaking immersion.
+### 5. Motion Design (Content Entering/Leaving)
+Motion is constrained to essential user actions. I avoided heavy scroll-trigger entry animations for performance and accessibility (respecting users who prefer reduced motion). Instead, horizontal motion is delegated to the Carousel scroll area via CSS `scroll-snap-type`. Language switching happens instantaneously via DOM manipulation to avoid layout shift.
 
-**3. How sections move or appear while scrolling — scroll behavior** Taking inspiration from *locomotive.ca*, an `IntersectionObserver` is heavily employed. Instead of using a heavy 3rd-party library that highjacks native scrolling (which often introduces accessibility issues), native CSS `scroll-behavior: smooth` is paired with JavaScript that watches elements enter the viewport.
+### 6. Fixed Elements vs. Scrolling Content
+The **Header** and **Back-to-Top Button** are fixed (`position: fixed`). 
+* *Rationale:* A sticky header keeps the brand identity (logo) and the primary utility (language selection dropdown) accessible at all times. To prevent the header from breaking the visual flow, it utilizes a semi-transparent background with `backdrop-filter: blur(10px)`.
 
-**4. Elements that slide, expand, or roll out — transitions and animations** Interactive elements scale and color-shift on hover. The language dropdown features a CSS `@keyframes` fade/slide-up animation. The horizontal image carousel utilizes native CSS `scroll-snap` features to give users a native app-like swipe/drag feel on touch devices.
+### 7. Visual Design & Typography
+The site employs two Google Fonts: **Playfair Display** (a classic serif that closely matches the botanical, heritage aesthetic of the provided logo) and **Lato** (a clean, legible sans-serif for paragraph text). The aesthetic is rooted in Scandinavian nature—minimalistic spacing, large photographic areas, and earthy tones.
 
-**5. How content enters or leaves the screen — motion design** Content enters utilizing a `.reveal` utility class. By default, these sections are nudged downward and have an opacity of 0. When JavaScript detects they are in the viewport, an `.is-visible` class is applied, firing a `1.2s cubic-bezier` transition that elegantly floats the content into place. `prefers-reduced-motion` is strictly respected in the CSS to disable this for sensitive users.
-
-**6. Fixed elements versus scrolling content** The header and the "Back to top" button are fixed. The header provides quick access to the language toggle. The back-to-top button only appears after traversing 500px down the Y-axis to avoid cluttering the initial viewport.
-
-**7. The overall visual appearance — visual design** The design communicates "Premium Garden Center". Google Fonts are imported specifically for this: *Cormorant Garamond* for beautiful, sophisticated serif headings, and *Inter* for highly legible UI and body text. Visual borders are softened with heavy `border-radius` variables (e.g., `20px` to `40px`), mimicking organic shapes rather than sharp tech-driven boxes. 
-
-**8. Other relevant aspects** * **Accessibility:** Semantic tags (`<main>`, `<section>`, `<details>`, `<summary>`) are used. Elements feature `aria-labels` and `aria-expanded` toggles for screen readers. 
-* **Localization (Checked Requirement):** A lightweight vanilla JS localization script dynamically targets `data-i18n` attributes. This avoids page reloads and instantly translates between English and Swedish. 
-* **Empty States (Checked Requirement):** Designed as a dashed-border "Upcoming Events" placeholder, proving the component exists without feeling like broken UI. 
-* **Video/Images:** Unsplash and Coverr CDN placeholders are utilized for royalty-free nature/garden imagery as requested.
+### 8. Checklist Features Addressed
+* **Header, Logo, Footer, Contact:** Built semantically (`<header>`, `<footer>`, `<section>`).
+* **Language Selection & Dropdown Menu:** Implemented via a custom JSON dictionary in JavaScript, toggled by a CSS hover dropdown in the header.
+* **Image Gallery & Image Carousel:** Gallery uses CSS Grid; Carousel is a touch-friendly CSS flex container utilizing `overflow-x: auto` (Scroll Areas).
+* **Empty States:** An "Upcoming Events" section actively utilizes an "Empty State" design pattern (dashed border, muted text/icon) as requested.
+* **Video Section:** Standard HTML5 `<video>` tag integrated smoothly with auto-play background capabilities. 
+* **FAQ Section:** Structured clearly as an information grid (H3 / P) rather than Accordions (as Accordion was unchecked).
