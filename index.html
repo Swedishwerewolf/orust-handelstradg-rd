@@ -1,729 +1,658 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orust Handelsträdgård | Växter, Trädgård & Inspiration på Orust</title>
-    <meta name="description" content="Välkommen till Orust Handelsträdgård – din lokala trädgård på västkusten för växter, blommor, buskar och trädgårdsinspiration.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --forest-green: #143122;
-            --deep-green: #1b3a2b;
-            --sage-green: #4a6b5d;
-            --light-sage: #8fa398;
-            --cream: #f4f0ea;
-            --warm-white: #faf9f6;
-            --gold: #c5a059;
-            --gold-light: #dfc288;
-            --charcoal: #222222;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--cream);
-            color: var(--charcoal);
-            overflow-x: hidden;
-            line-height: 1.7;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--forest-green);
-        }
-
-        /* Header & Navigation */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 5%;
-            background: rgba(27, 58, 43, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-            transition: var(--transition);
-        }
-
-        header.scrolled {
-            padding: 0.8rem 5%;
-            background: rgba(20, 49, 34, 0.95);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-        }
-
-        .logo-badge {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--cream);
-            border: 2px solid var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-
-        .logo-badge svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .brand-title {
-            color: var(--cream);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            letter-spacing: 0.05em;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .lang-switch {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--cream);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .lang-switch:hover {
-            background: var(--gold);
-            color: var(--forest-green);
-        }
-
-        /* Cinematic 3D Parallax Hero Section */
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--cream);
-        }
-
-        .parallax-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            will-change: transform;
-            pointer-events: none;
-        }
-
-        .layer-bg {
-            background: linear-gradient(rgba(20, 49, 34, 0.4), rgba(20, 49, 34, 0.6)), url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
-            z-index: 1;
-            transform: scale(1.1);
-        }
-
-        .layer-mid {
-            background: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=2000&q=80') no-repeat center center/cover;
-            opacity: 0.35;
-            mix-blend-mode: overlay;
-            z-index: 2;
-        }
-
-        .layer-fog {
-            background: radial-gradient(circle, rgba(27,58,43,0) 40%, rgba(20,49,34,0.8) 90%);
-            z-index: 3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 800px;
-            padding: 0 2rem;
-            transform: translateY(0);
-            transition: transform 0.5s ease-out;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: var(--gold-light);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            color: var(--cream);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            margin-bottom: 2.5rem;
-            color: rgba(244, 240, 234, 0.9);
-            font-weight: 300;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            background-color: var(--gold);
-            color: var(--forest-green);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            transition: var(--transition);
-            border: 2px solid var(--gold);
-        }
-
-        .btn-primary:hover {
-            background-color: transparent;
-            color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--cream);
-            opacity: 0.8;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
-            40% {transform: translateY(-10px) translateX(-50%);}
-            60% {transform: translateY(-5px) translateX(-50%);}
-        }
-
-        /* Main Sections Layout */
-        section {
-            padding: 7rem 10%;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 5rem auto;
-        }
-
-        .section-header span {
-            color: var(--gold);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-size: 0.85rem;
-            display: block;
-            margin-bottom: 0.75rem;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
-            color: var(--forest-green);
-            line-height: 1.2;
-        }
-
-        /* About / Story Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--forest-green);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-            color: #555;
-            font-size: 1.05rem;
-        }
-
-        .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .feature-item i {
-            color: var(--gold);
-            font-size: 1.5rem;
-            margin-top: 0.2rem;
-        }
-
-        .feature-item h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .feature-item p {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 0;
-        }
-
-        /* Image Carousel / Gallery Section */
-        .carousel-container {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            height: 450px;
-        }
-
-        .carousel-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(27, 58, 43, 0.7);
-            color: var(--cream);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .carousel-btn:hover {
-            background: var(--gold);
-            color: var(--forest-green);
-        }
-
-        .carousel-btn.prev { left: 20px; }
-        .carousel-btn.next { right: 20px; }
-
-        /* Plant Collections Gallery */
-        .gallery-section {
-            background-color: var(--deep-green);
-            color: var(--cream);
-        }
-
-        .gallery-section .section-header h2 {
-            color: var(--cream);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .gallery-card {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            height: 380px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            cursor: pointer;
-        }
-
-        .gallery-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .gallery-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 2.5rem 2rem 2rem 2rem;
-            background: linear-gradient(transparent, rgba(20, 49, 34, 0.95));
-            transform: translateY(20px);
-            transition: var(--transition);
-        }
-
-        .gallery-card:hover .gallery-overlay {
-            transform: translateY(0);
-        }
-
-        .gallery-overlay h3 {
-            color: var(--cream);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .gallery-overlay p {
-            color: var(--gold-light);
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* Video Section */
-        .video-section {
-            padding: 5rem 10%;
-            background-color: var(--warm-white);
-            text-align: center;
-        }
-
-        .video-wrapper {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-            height: 500px;
-        }
-
-        .video-wrapper video, .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* FAQ Section */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--warm-white);
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .faq-question {
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: var(--forest-green);
-            font-weight: 700;
-        }
-
-        .faq-question i {
-            transition: transform 0.3s ease;
-            color: var(--gold);
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            padding: 0 2rem;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s ease;
-            color: #555;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 2rem 1.5rem 2rem;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background-color: var(--forest-green);
-            color: var(--cream);
-        }
-
-        .contact-section .section-header h2 {
-            color: var(--cream);
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-info-card {
-            background: rgba(255,255,255,0.05);
-            padding: 3rem;
-            border-radius: 20px;
-            border: 1px solid rgba(197, 160, 89, 0.3);
-        }
-
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-info-item i {
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-top: 0.2rem;
-        }
-
-        .contact-info-item h4 {
-            color: var(--cream);
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .contact-info-item p {
-            color: rgba(244, 240, 234, 0.8);
-            font-size: 0.95rem;
-        }
-
-        .map-container {
-            border-radius: 20px;
-            overflow: hidden;
-            height: 100%;
-            min-height: 400px;
-            border: 1px solid rgba(197, 160, 89, 0.3);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #0e2419;
-            color: var(--cream);
-            padding: 4rem 10% 2rem 10%;
-            border-top: 1px solid rgba(197, 160, 89, 0.2);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .social-links a {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--gold);
-            color: var(--cream);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background: var(--gold);
-            color: var(--forest-green);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(244, 240, 234, 0.6);
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .back-to-top {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--cream);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-to-top:hover {
-            background: var(--gold);
-            color: var(--forest-green);
-        }
-
-        /* Empty States */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--warm-white);
-            border-radius: 16px;
-            border: 2px dashed rgba(197, 160, 89, 0.3);
-            margin: 2rem 0;
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--forest-green);
-        }
-
-        .empty-state p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 968px) {
-            .about-grid, .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            section {
-                padding: 5rem 5%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem 5%;
-            }
-            .about-features {
-                grid-template-columns: 1fr;
-            }
-            .footer-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Orust Handelsträdgård — Orust Handelsträdgård</title>
+<meta name="description" content="Orust Handelsträdgård — lokal handelsträdgård på Orust. Plantor, snittblommor, trädgårdsråd och växthus." />
+<meta name="keywords" content="Orust, handelsträdgård, plantskola, växthus, trädgård, växter, Sweden, Orust Nursery" />
+<link rel="icon" href="favicon.ico" />
+<style>
+  /* Reset / base */
+  :root{
+    --bg:#0f1720;
+    --card:#f7f6f2;
+    --muted:#6b7280;
+    --accent:#2f6b3a;
+    --accent-2:#a7c08a;
+    --glass: rgba(255,255,255,0.06);
+    --max-width:1200px;
+    --radius:14px;
+    --ease: cubic-bezier(.2,.9,.3,1);
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    --serif: "Merriweather", Georgia, serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--font-sans);
+    color:var(--bg);
+    background:linear-gradient(180deg,#eaf6ea 0%, #f7fbf7 40%, #ffffff 100%);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-y:scroll;
+  }
+
+  /* Layout container */
+  .site{
+    max-width:var(--max-width);
+    margin:0 auto;
+    padding:28px;
+    position:relative;
+  }
+
+  /* Header */
+  header.header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .logo{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    overflow:hidden;
+    flex:0 0 72px;
+    box-shadow:0 6px 18px rgba(15,23,32,0.12);
+    background:linear-gradient(180deg,#e6efe0,#dfe9db);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand h1{
+    margin:0;
+    font-size:20px;
+    line-height:1;
+    color:var(--bg);
+    font-weight:700;
+    letter-spacing:0.2px;
+  }
+  .brand p{margin:0;font-size:13px;color:var(--muted)}
+
+  /* Language / dropdown */
+  .controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .lang-switch{
+    background:transparent;
+    border:1px solid rgba(15,23,32,0.06);
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    color:var(--bg);
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .dropdown{
+    position:relative;
+  }
+  .dropdown button{
+    background:var(--accent);
+    color:white;
+    border:0;
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  .dropdown-menu{
+    position:absolute;
+    right:0;
+    top:calc(100% + 8px);
+    background:white;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(2,6,23,0.08);
+    overflow:hidden;
+    min-width:220px;
+    transform-origin:top right;
+    opacity:0;
+    pointer-events:none;
+    transform:scale(.98);
+    transition:all .22s var(--ease);
+    z-index:60;
+  }
+  .dropdown-menu.open{opacity:1;pointer-events:auto;transform:scale(1)}
+  .dropdown-menu a{
+    display:block;padding:12px 14px;color:#0f1720;text-decoration:none;font-weight:600;
+  }
+  .dropdown-menu a:hover{background:#f3f6f3}
+
+  /* Parallax hero (multi-layer) */
+  .hero-wrap{
+    position:relative;
+    height:68vh;
+    min-height:420px;
+    border-radius:18px;
+    overflow:hidden;
+    margin-bottom:28px;
+    box-shadow:0 20px 60px rgba(15,23,32,0.08);
+    background:linear-gradient(180deg, rgba(47,107,58,0.06), rgba(167,192,138,0.02));
+  }
+  .parallax-layer{
+    position:absolute;left:0;right:0;top:0;bottom:0;
+    background-position:center center;background-size:cover;
+    transform:translateZ(0);
+    will-change:transform,opacity;
+  }
+  /* layers: far (sky/sea), mid (shore/greenhouse), near (plants) */
+  .layer-far{filter:contrast(.95) saturate(.95); z-index:1}
+  .layer-mid{z-index:2;mix-blend-mode:normal;opacity:.98}
+  .layer-near{z-index:3;filter:drop-shadow(0 20px 40px rgba(15,23,32,0.18));}
+
+  /* overlay content */
+  .hero-content{
+    position:relative;
+    z-index:6;
+    height:100%;
+    display:flex;
+    align-items:center;
+    padding:48px;
+    gap:28px;
+  }
+  .hero-text{
+    max-width:640px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.9));
+    padding:28px;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(15,23,32,0.06);
+    backdrop-filter: blur(6px);
+  }
+  .hero-text h2{
+    margin:0 0 8px 0;
+    font-family:var(--serif);
+    font-size:34px;
+    color:var(--bg);
+    line-height:1.05;
+  }
+  .hero-text p{margin:0;color:var(--muted);font-size:15px}
+
+  /* media gallery carousel */
+  .carousel{
+    margin-left:auto;
+    width:420px;
+    max-width:40%;
+    min-width:260px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(2,6,23,0.06);
+    background:white;
+  }
+  .carousel img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* Main grid */
+  main{
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:28px;
+    align-items:start;
+  }
+  .content{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.04);
+  }
+  .content h3{margin-top:0;font-family:var(--serif);color:var(--bg)}
+  .intro{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+  }
+  .intro .text{flex:1}
+  .intro .meta{
+    width:220px;
+    background:var(--glass);
+    padding:12px;border-radius:10px;color:var(--bg);
+  }
+
+  /* Gallery */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:16px;
+  }
+  .gallery img{width:100%;height:120px;object-fit:cover;border-radius:8px;display:block}
+
+  /* FAQ */
+  .faq{margin-top:18px}
+  .faq details{
+    background:linear-gradient(180deg,#ffffff,#fbfdfb);
+    padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(15,23,32,0.04);
+  }
+  .faq summary{font-weight:700;cursor:pointer;outline:none}
+  .faq p{margin:8px 0 0 0;color:var(--muted)}
+
+  /* Contact / footer column */
+  aside.contact{
+    position:relative;
+    top:0;
+  }
+  .contact .card{
+    background:linear-gradient(180deg,#ffffff,#f7fff7);
+    padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.04);
+  }
+  .contact h4{margin:0 0 8px 0}
+  .contact .info{font-size:14px;color:var(--muted);line-height:1.5}
+  .socials{display:flex;gap:10px;margin-top:12px}
+  .socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+
+  /* Footer */
+  footer{
+    margin-top:28px;
+    padding:18px;border-radius:12px;background:linear-gradient(180deg,#f3f7f3,#eef6ea);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .footer-left{color:var(--muted);font-size:14px}
+  .footer-right{display:flex;gap:12px;align-items:center}
+
+  /* Back to top */
+  .back-top{
+    position:fixed;right:20px;bottom:20px;width:52px;height:52px;border-radius:12px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,6,23,0.18);cursor:pointer;z-index:80;
+  }
+
+  /* Empty state */
+  .empty{
+    border:2px dashed rgba(15,23,32,0.06);
+    padding:28px;border-radius:12px;text-align:center;color:var(--muted);
+  }
+
+  /* Responsive */
+  @media (max-width:1000px){
+    main{grid-template-columns:1fr 320px}
+    .hero-content{padding:28px}
+    .carousel{display:none}
+  }
+  @media (max-width:800px){
+    .site{padding:18px}
+    header.header{flex-direction:column;align-items:flex-start;gap:12px}
+    main{grid-template-columns:1fr}
+    .contact{order:2}
+    .content{order:1}
+    .hero-wrap{height:56vh;min-height:360px}
+  }
+
+  /* Accessibility focus */
+  a:focus, button:focus, summary:focus{outline:3px solid rgba(47,107,58,0.18);outline-offset:3px}
+
+  /* Animations */
+  .fade-in{animation:fadeIn .7s var(--ease) both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+
+</style>
 </head>
 <body>
-
-    <header id="header">
-        <a href="#" class="logo-container">
-            <div class="logo-badge">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="48" fill="#1b3a2b" stroke="#c5a059" stroke-width="2"/>
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#c5a059" stroke-width="0.75" opacity="0.6"/>
-                    <g transform="translate(50, 48) scale(0.65)" fill="#c5a059">
-                        <path d="M0,-15 C5,-25 15,-20 10,-10 C20,-12 25,-2 15,2 C25,8 18,18 10,12 C5,22 -5,22 -10,12 C-18,18 -25,8 -15,2 C-25,-2 -20,-12 -10,-10 C-15,-20 -5,-25 0,-15 Z" fill="#dfc288"/>
-                        <circle cx="0" cy="0" r="4" fill="#1b3a2b"/>
-                        <path d="M-2,12 L-4,30 M2,10 L6,28 M0,15 L-1,25" stroke="#dfc288" stroke-width="2" fill="none"/>
-                    </g>
-                </svg>
-            </div>
-            <span class="brand-title">Orust Handelsträdgård</span>
-        </a>
-        <div class="header-actions">
-            <button id="langToggle" class="lang-switch" onclick="toggleLanguage()">
-                <i class="fa-solid fa-globe"></i> <span id="langText">ENGLISH</span>
-            </button>
+  <div class="site" id="site">
+    <header class="header" role="banner">
+      <div class="brand" aria-label="Orust Handelsträdgård">
+        <div class="logo" aria-hidden="true">
+          <!-- Place the provided logo file named "logo.png" next to index.html -->
+          <img src="logo.png" alt="Orust Handelsträdgård logo">
         </div>
+        <div>
+          <h1>Orust Handelsträdgård</h1>
+          <p id="tagline">Lokal plantskola och handelsträdgård på Orust</p>
+        </div>
+      </div>
+
+      <div class="controls" role="navigation" aria-label="Site controls">
+        <div class="dropdown" id="langDropdown">
+          <button id="langBtn" aria-haspopup="true" aria-expanded="false">SV</button>
+          <div class="dropdown-menu" id="langMenu" role="menu" aria-hidden="true">
+            <a href="#" data-lang="sv" role="menuitem">Svenska</a>
+            <a href="#" data-lang="en" role="menuitem">English</a>
+          </div>
+        </div>
+        <button class="lang-switch" id="visitBtn" title="Open seasonal opening hours">Öppettider</button>
+      </div>
     </header>
 
-    <section class="hero" id="home">
-        <div class="parallax-layer layer-bg" data-speed="0.2"></div>
-        <div class="parallax-layer layer-mid" data-speed="0.5"></div>
-        <div class="parallax-layer layer-fog" data-speed="0.8"></div>
+    <!-- Hero with multi-layer parallax -->
+    <section class="hero-wrap" id="hero" aria-label="Hero: Orust Handelsträdgård">
+      <!-- Far layer: sea/sky -->
+      <div class="parallax-layer layer-far" id="layerFar" style="background-image:url('images/sea.jpg');"></div>
+      <!-- Mid layer: greenhouse / shore -->
+      <div class="parallax-layer layer-mid" id="layerMid" style="background-image:url('images/greenhouse.jpg');"></div>
+      <!-- Near layer: plants -->
+      <div class="parallax-layer layer-near" id="layerNear" style="background-image:url('images/plants.jpg');"></div>
+
+      <div class="hero-content">
+        <div class="hero-text fade-in" id="heroText">
+          <h2 id="heroTitle">Orust Handelsträdgård</h2>
+          <p id="heroDesc">Vi odlar med omtanke — säsongens plantor, snittblommor och trädgårdsråd från västkusten.</p>
+        </div>
+
+        <div class="carousel" aria-hidden="false" id="carousel">
+          <img src="images/stand.jpg" alt="Market stand with plants">
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="content" id="mainContent" aria-labelledby="aboutHeading">
+        <h3 id="aboutHeading">Om oss</h3>
+        <div class="intro">
+          <div class="text">
+            <p>Orust Handelsträdgård är en familjeägd plantskola belägen på västkusten. Vi erbjuder ett urval av perenner, sommarblommor, örter och inomhusväxter, samt rådgivning för din trädgård.</p>
+
+            <div class="gallery" aria-label="Bildgalleri">
+              <!-- Images will be filled by JS with royalty-free images -->
+              <img src="images/thumb1.jpg" alt="Blommande perenner">
+              <img src="images/thumb2.jpg" alt="Växthus interiör">
+              <img src="images/thumb3.jpg" alt="Potted herbs">
+            </div>
+
+            <h3 style="margin-top:18px">Video</h3>
+            <div style="border-radius:12px;overflow:hidden;margin-top:8px">
+              <!-- Lightweight video section using HTML5 video with muted autoplay loop (user can unmute) -->
+              <video id="promoVideo" playsinline muted loop controls style="width:100%;display:block;background:#000">
+                <source src="videos/garden-loop.mp4" type="video/mp4">
+                <!-- Fallback empty state -->
+                Din webbläsare stöder inte videouppspelning.
+              </video>
+            </div>
+
+            <div class="faq" aria-label="FAQ">
+              <h3 style="margin-top:18px">Vanliga frågor</h3>
+
+              <details>
+                <summary>Var ligger ni på Orust?</summary>
+                <p>Vi ligger nära Ellös, med utsikt mot västerhavet. Adress och vägbeskrivning finns i kontaktsektionen.</p>
+              </details>
+
+              <details>
+                <summary>Har ni öppet under vintern?</summary>
+                <p>Våra öppettider varierar med säsong. Se aktuella öppettider i sidhuvudet eller kontakta oss direkt.</p>
+              </details>
+
+              <details>
+                <summary>Kan jag beställa plantor i förväg?</summary>
+                <p>Ja — ring eller mejla oss för beställningar och upphämtning.</p>
+              </details>
+            </div>
+          </div>
+
+          <aside class="meta" aria-labelledby="visitHeading">
+            <h4 id="visitHeading">Säsong &amp; info</h4>
+            <p><strong>Adress:</strong><br>Orust Handelsträdgård<br>Orust, Västra Götaland</p>
+            <p><strong>Telefon:</strong><br><a href="tel:+46701234567">+46 70 123 45 67</a></p>
+            <p><strong>E-post:</strong><br><a href="mailto:info@orusthandelstradgard.se">info@orusthandelstradgard.se</a></p>
+            <div style="margin-top:12px">
+              <strong>Sociala medier</strong>
+              <div class="socials" aria-hidden="false">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Instagram">ig</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <aside class="contact" aria-labelledby="contactHeading">
+        <div class="card">
+          <h4 id="contactHeading">Kontakta oss</h4>
+          <p class="info">Välkommen att besöka oss under säsong eller kontakta för beställningar och rådgivning. Vi svarar vanligtvis inom 48 timmar.</p>
+
+          <div style="margin-top:12px">
+            <strong>Öppettider</strong>
+            <p class="info">Mån–Fre 10:00–17:00<br>Lör 10:00–14:00<br>Sön stängt</p>
+          </div>
+
+          <div style="margin-top:12px">
+            <strong>Hitta hit</strong>
+            <p class="info">Kör mot Ellös, följ skyltar mot handelsträdgård. Parkering finns på plats.</p>
+          </div>
+
+          <div style="margin-top:12px">
+            <button id="mapBtn" style="background:var(--accent);color:white;border:0;padding:10px 12px;border-radius:10px;cursor:pointer">Visa karta</button>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card empty" aria-hidden="false">
+          <strong>Butik online</strong>
+          <p>Webbshop kommer snart. Under tiden: ring eller mejla för beställningar.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="footer-left">© <span id="year"></span> Orust Handelsträdgård — Alla rättigheter förbehållna</div>
+      <div class="footer-right">
+        <div style="color:var(--muted);font-size:14px">Språk</div>
+        <div style="display:flex;gap:8px">
+          <button class="lang-switch" data-lang="sv">SV</button>
+          <button class="lang-switch" data-lang="en">EN</button>
+        </div>
+      </div>
+    </footer>
+
+    <div class="back-top" id="backTop" aria-label="Back to top" title="Back to top" role="button">↑</div>
+  </div>
+
+<script>
+/*
+  Orust Handelsträdgård — Single-file page script
+  - Handles language switching (sv/en)
+  - Parallax multi-layer scroll
+  - Dropdown and simple interactions
+  - Accessibility: keyboard support, reduced-motion respect
+*/
+
+/* --- Config / content (translatable) --- */
+const content = {
+  sv: {
+    tagline: "Lokal plantskola och handelsträdgård på Orust",
+    heroTitle: "Orust Handelsträdgård",
+    heroDesc: "Vi odlar med omtanke — säsongens plantor, snittblommor och trädgårdsråd från västkusten.",
+    aboutHeading: "Om oss",
+    contactHeading: "Kontakta oss",
+    visitBtn: "Öppettider",
+    mapBtn: "Visa karta",
+    footer: "Alla rättigheter förbehållna"
+  },
+  en: {
+    tagline: "Local nursery and market garden on Orust",
+    heroTitle: "Orust Nursery",
+    heroDesc: "We grow with care — seasonal plants, cut flowers and gardening advice from the west coast.",
+    aboutHeading: "About us",
+    contactHeading: "Contact",
+    visitBtn: "Opening hours",
+    mapBtn: "Show map",
+    footer: "All rights reserved"
+  }
+};
+
+/* --- Utility --- */
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* --- Language switching --- */
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+const langDropdown = document.getElementById('langDropdown');
+
+function setLanguage(lang){
+  document.documentElement.lang = (lang === 'sv') ? 'sv' : 'en';
+  const c = content[lang];
+  document.getElementById('tagline').textContent = c.tagline;
+  document.getElementById('heroTitle').textContent = c.heroTitle;
+  document.getElementById('heroDesc').textContent = c.heroDesc;
+  document.getElementById('aboutHeading').textContent = c.aboutHeading;
+  document.getElementById('contactHeading').textContent = c.contactHeading;
+  document.getElementById('visitBtn').textContent = c.visitBtn;
+  document.getElementById('mapBtn').textContent = c.mapBtn;
+  langBtn.textContent = (lang === 'sv') ? 'SV' : 'EN';
+  // update footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // store preference in session (not persistent)
+  sessionStorage.setItem('site-lang', lang);
+}
+
+/* Dropdown behavior */
+langBtn.addEventListener('click', (e)=>{
+  const open = langMenu.classList.toggle('open');
+  langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  langMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+});
+langMenu.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const lang = a.dataset.lang;
+    setLanguage(lang);
+    langMenu.classList.remove('open');
+    langBtn.setAttribute('aria-expanded','false');
+    langMenu.setAttribute('aria-hidden','true');
+  });
+});
+
+/* Footer language buttons */
+document.querySelectorAll('.lang-switch[data-lang]').forEach(btn=>{
+  btn.addEventListener('click', ()=> setLanguage(btn.dataset.lang));
+});
+
+/* Initialize language */
+const initialLang = sessionStorage.getItem('site-lang') || 'sv';
+setLanguage(initialLang);
+
+/* --- Parallax scroll --- */
+const layerFar = document.getElementById('layerFar');
+const layerMid = document.getElementById('layerMid');
+const layerNear = document.getElementById('layerNear');
+const hero = document.getElementById('hero');
+
+function onScroll(){
+  const rect = hero.getBoundingClientRect();
+  const h = window.innerHeight;
+  const progress = Math.min(Math.max((h - rect.top) / (h + rect.height), 0), 1);
+
+  // subtle transforms for cinematic depth
+  if(!prefersReduced){
+    layerFar.style.transform = `translateY(${progress * -10}px) scale(${1 + progress*0.02})`;
+    layerMid.style.transform = `translateY(${progress * -22}px) scale(${1 + progress*0.03})`;
+    layerNear.style.transform = `translateY(${progress * -40}px) scale(${1 + progress*0.05})`;
+    // parallax opacity shift
+    layerFar.style.opacity = 0.95 - progress*0.08;
+    layerNear.style.opacity = 0.98;
+  } else {
+    layerFar.style.transform = '';
+    layerMid.style.transform = '';
+    layerNear.style.transform = '';
+  }
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* --- Back to top --- */
+const backTop = document.getElementById('backTop');
+backTop.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+backTop.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') window.scrollTo({top:0,behavior:'smooth'}) });
+
+/* --- Map button (simple behavior) --- */
+document.getElementById('mapBtn').addEventListener('click', ()=>{
+  // open Google Maps in new tab with a search for Orust Handelsträdgård
+  window.open('https://www.google.com/maps/search/Orust+Handelstr%C3%A4dg%C3%A5rd', '_blank', 'noopener');
+});
+
+/* --- Carousel / gallery placeholders --- */
+/* The page expects local images in /images and /videos directories.
+   For a self-contained demo, the images can be replaced with royalty-free images.
+   If images are missing, the UI shows empty states. */
+
+function checkAssets(){
+  // If images are missing, show empty state text
+  const imgs = document.querySelectorAll('.gallery img, .carousel img');
+  imgs.forEach(img=>{
+    img.addEventListener('error', ()=>{
+      img.style.display='none';
+      const parent = img.parentElement;
+      if(parent && !parent.querySelector('.empty')){
+        const empty = document.createElement('div');
+        empty.className='empty';
+        empty.textContent = 'Bild saknas — lägg till royaltyfria bilder i mappen images/';
+        parent.appendChild(empty);
+      }
+    });
+  });
+
+  const video = document.getElementById('promoVideo');
+  video.addEventListener('error', ()=>{
+    const p = document.createElement('div');
+    p.className='empty';
+    p.textContent = 'Video saknas — lägg till en MP4 i videos/garden-loop.mp4';
+    video.parentElement.replaceChild(p, video);
+  });
+}
+checkAssets();
+
+/* --- Accessibility: keyboard close for dropdown --- */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    langMenu.classList.remove('open');
+    langBtn.setAttribute('aria-expanded','false');
+    langMenu.setAttribute('aria-hidden','true');
+  }
+});
+
+/* --- Micro-interactions: small hover feedback --- */
+document.querySelectorAll('button, a').forEach(el=>{
+  el.addEventListener('mouseover', ()=> el.style.transform = 'translateY(-1px)');
+  el.addEventListener('mouseout', ()=> el.style.transform = '');
+});
+
+/* --- Year in footer --- */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --- Notes:
+   - This page is desktop-first but responsive down to mobile breakpoints.
+   - Images and video are expected to be placed in local folders:
+     /images/sea.jpg
+     /images/greenhouse.jpg
+     /images/plants.jpg
+     /images/stand.jpg
+     /images/thumb1.jpg
+     /images/thumb2.jpg
+     /images/thumb3.jpg
+     /videos/garden-loop.mp4
+   - The provided logo should be named logo.png and placed next to this HTML file.
+*/
+</script>
+
+<!--
+Design Rationale (brief)
+
+1. Overall arrangement of elements — layout
+   - Header contains brand (logo + title) and language/controls on the right.
+   - Hero is a large multi-layer parallax container occupying the top of the page.
+   - Main area uses a two-column grid: primary content (left) and contact/aside (right).
+   - Footer contains copyright and language quick-switch.
+   - Responsive breakpoints: desktop (two-column), tablet (reduced carousel), mobile (single column).
+   - Grid uses max-width container for readable line lengths and consistent spacing.
+
+2. Background and foreground relationships — visual composition
+   - Background uses layered photographic textures (sea, greenhouse, plants) with subtle gradients to create depth.
+   - Foreground content sits on light cards with shadows and slight blur (backdrop-filter) to separate from imagery.
+   - Color palette: deep green accent (#2f6b3a) for brand, soft beige/cream backgrounds for warmth, muted grays for text.
+   - Z-index layering ensures hero imagery sits behind content; cards have higher z-index and drop shadows.
+
+3. How sections move or appear while scrolling — scroll behavior and interactions
+   - Implemented multi-layer parallax: three layers move at different rates to create faux-3D depth.
